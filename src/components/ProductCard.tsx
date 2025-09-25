@@ -7,10 +7,11 @@ interface Product {
 }
 
 interface ProductCardProps {
-  product: Product;
+  product: Required<Product>;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product,addToCart }) => {
+  console.log(product)
   return (
     <div className="card-product group">
       <div className="aspect-square overflow-hidden">
@@ -29,9 +30,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </p>
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-primary">
-            {product.price}
+            Rs {product.price}
           </span>
-          <button className="btn-secondary">
+          <button className="btn-secondary" type="button" onClick={() => addToCart(product)}>
             Add to Cart
           </button>
         </div>

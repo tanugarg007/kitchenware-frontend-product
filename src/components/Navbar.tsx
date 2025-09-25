@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+   
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -40,6 +41,7 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="flex items-center space-x-4">
+             
               <Link
                 to="/login"
                 className="text-foreground hover:text-primary transition-colors duration-200"
@@ -52,6 +54,8 @@ const Navbar = () => {
               >
                 Sign Up
               </Link>
+            
+            
             </div>
           </div>
 
@@ -89,6 +93,7 @@ const Navbar = () => {
                 </Link>
               ))}
               <div className="pt-4 space-y-2">
+               
                 <Link
                   to="/login"
                   onClick={() => setIsOpen(false)}
@@ -103,6 +108,8 @@ const Navbar = () => {
                 >
                   Sign Up
                 </Link>
+                
+              
               </div>
             </div>
           </div>

@@ -17,17 +17,36 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
-      return;
+    try{
+      const response = await fetch('http://localhost:4000/users/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const result = await response.json();
+      if(response.status === 201 && result.token){
+        localStorage.setItem('token', result.token);
+        if(result.user){
+          localStorage.setItem('user', JSON.stringify(result.user));
+        }
+       
+      }
     }
+    catch(err){
+      console.log(err);
+    }
+     if (formData.password !== formData.confirmPassword) {
+       alert('Passwords do not match!');
+       return;
+     }
 
     // Handle signup logic here
     console.log('Signup attempt:', formData);
-    alert('Account creation functionality would be implemented here!');
+    // alert('Account creation functionality would be implemented here!');
   };
 
   return (

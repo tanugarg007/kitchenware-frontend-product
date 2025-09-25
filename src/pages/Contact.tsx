@@ -59,8 +59,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">Phone</h3>
-                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                  <p className="text-muted-foreground">Mon-Fri 9AM-6PM EST</p>
+                  <p className="text-muted-foreground">94646-67336</p>
+                  <p className="text-muted-foreground">All day are avalable</p>
                 </div>
               </div>
 
@@ -70,8 +70,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">Address</h3>
-                  <p className="text-muted-foreground">123 Kitchen Street</p>
-                  <p className="text-muted-foreground">Culinary City, CC 12345</p>
+                  <p className="text-muted-foreground">Jodhu Colony Street No-1</p>
+                  <p className="text-muted-foreground">Shri Muktsar Sahib, Punjab</p>
                 </div>
               </div>
             </div>
@@ -79,9 +79,9 @@ const Contact = () => {
             <div className="mt-8 p-6 gradient-hero rounded-xl">
               <h3 className="text-lg font-semibold text-foreground mb-3">Customer Support Hours</h3>
               <div className="space-y-2 text-muted-foreground">
-                <p>Monday - Friday: 9:00 AM - 6:00 PM EST</p>
-                <p>Saturday: 10:00 AM - 4:00 PM EST</p>
-                <p>Sunday: Closed</p>
+                <p>All day are avalable</p>
+                <p>Timming: 9:00 AM - 9:00 PM</p>
+                
               </div>
             </div>
           </div>

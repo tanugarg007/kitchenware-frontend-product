@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,8 @@ const Login = () => {
     password: ''
   });
 
+
+const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -14,12 +17,35 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+   
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+try{
+  const response = await fetch('http://localhost:4000/users/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  });
+     const result = await response.json();
+    if (response.status === 200 && result.token && result.user) {
+      localStorage.setItem('user', JSON.stringify(result.user));
+      localStorage.setItem('token', result.token);
+      navigate('/');
+    }
+  }
+  catch(err){
+    console.log(err);
+
+  }
+}
+
     // Handle login logic here
     console.log('Login attempt:', formData);
-    alert('Login functionality would be implemented here!');
-  };
+    // alert('Login functionality would be implemented here!');
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

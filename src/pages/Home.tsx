@@ -1,34 +1,34 @@
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import heroImage from '../assets/hero-kitchen.jpg';
-import waterBottleImage from '../assets/water-bottle.jpg';
-import gasStoveImage from '../assets/gas-stove.jpg';
-import jugImage from '../assets/jug.jpg';
 
+import { useState, useEffect } from 'react';
 const Home = () => {
-  const featuredProducts = [
-    {
-      id: 1,
-      name: 'Premium Water Bottle',
-      price: '$29.99',
-      image: waterBottleImage,
-      description: 'Insulated stainless steel bottle keeps drinks at perfect temperature.'
-    },
-    {
-      id: 2,
-      name: 'Professional Gas Stove',
-      price: '$599.99',
-      image: gasStoveImage,
-      description: 'High-efficiency gas stove with precise flame control for perfect cooking.'
-    },
-    {
-      id: 3,
-      name: 'Ceramic Jug',
-      price: '$45.99',
-      image: jugImage,
-      description: 'Elegant ceramic jug perfect for serving beverages in style.'
-    }
-  ];
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/users/products", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch products: ${res.status} ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        setFeaturedProducts(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -62,33 +62,37 @@ const Home = () => {
         </div>
       </section>
 
+     
       {/* Featured Products Section */}
-      <section className="py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Featured Products
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Discover our handpicked selection of premium kitchenware designed to inspire your culinary journey
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.map((product, index) => (
-              <div key={product.id} className={`animate-slide-up`} style={{ animationDelay: `${index * 0.2}s` }}>
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
+<section className="py-20 bg-background">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+        Featured Products
+      </h2>
+      <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        Discover our handpicked selection of premium kitchenware designed to inspire your culinary journey
+      </p>
+    </div>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {featuredProducts.slice(0, 3).map((product) => (
+        <ProductCard 
+          key={product.id} 
+          product={product} 
+          addToCart={() => console.log('Add to cart:', product)} 
+        />
+      ))}
+    </div>
 
-          <div className="text-center mt-12">
-            <Link to="/products" className="btn-hero">
-              View All Products
-            </Link>
-          </div>
-        </div>
-      </section>
+    <div className="text-center mt-12">
+      <Link to="/products" className="btn-hero">
+        View All Products
+      </Link>
+    </div>
+  </div>
+</section>
+
 
       {/* CTA Section */}
       <section className="py-20 gradient-hero">

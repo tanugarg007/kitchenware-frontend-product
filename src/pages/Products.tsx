@@ -1,54 +1,45 @@
 import ProductCard from '../components/ProductCard';
-import waterBottleImage from '../assets/water-bottle.jpg';
-import gasStoveImage from '../assets/gas-stove.jpg';
-import jugImage from '../assets/jug.jpg';
+import { useState, useEffect } from 'react';
 
 const Products = () => {
-  const products = [
-    {
-      id: 1,
-      name: 'Premium Water Bottle',
-      price: '$29.99',
-      image: waterBottleImage,
-      description: 'Insulated stainless steel bottle keeps drinks at perfect temperature.'
-    },
-    {
-      id: 2,
-      name: 'Professional Gas Stove',
-      price: '$599.99',
-      image: gasStoveImage,
-      description: 'High-efficiency gas stove with precise flame control for perfect cooking.'
-    },
-    {
-      id: 3,
-      name: 'Ceramic Jug',
-      price: '$45.99',
-      image: jugImage,
-      description: 'Elegant ceramic jug perfect for serving beverages in style.'
-    },
-    {
-      id: 4,
-      name: 'Deluxe Water Bottle Set',
-      price: '$79.99',
-      image: waterBottleImage,
-      description: 'Complete set of premium bottles for the whole family.'
-    },
-    {
-      id: 5,
-      name: 'Professional Kitchen Set',
-      price: '$1299.99',
-      image: gasStoveImage,
-      description: 'Complete professional-grade kitchen appliance collection.'
-    },
-    {
-      id: 6,
-      name: 'Artisan Jug Collection',
-      price: '$129.99',
-      image: jugImage,
-      description: 'Beautiful handcrafted ceramic jug collection in various sizes.'
-    }
-  ];
+  const [products, setProducts] = useState([]);
+  const [selectCategory,setSelectCategory] = useState('All');
+  const addToCart = (product) => {
+    console.log("Added to cart:", product);
+    // TODO: update cart state or send to backend
+  };
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      console.log("fetchiing products")
+      try {
+        const res = await fetch("http://localhost:4000/users/products", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch products: ${res.status} ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+console.log(products)
+    const filteredProducts =
+    selectCategory === "All"
+      ? products
+      : products.filter((product) => product.category === selectCategory);
+
+      
   return (
     <div className="min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,15 +55,26 @@ const Products = () => {
 
         {/* Filters */}
         <div className="flex flex-wrap gap-4 justify-center mb-12">
-          <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:shadow-medium transition-all duration-300">
+          <button onClick={()=> setSelectCategory('All')} className={`px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:shadow-medium transition-all duration-300" ${
+            selectCategory === 'All' ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground"}`}>
             All Products
           </button>
-          <button className="px-6 py-3 bg-secondary text-secondary-foreground rounded-lg font-medium hover:bg-accent hover:text-accent-foreground transition-all duration-300">
+
+          <button
+            onClick={() => setSelectCategory("Water Bottles")}
+            className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+              selectCategory === "Water Bottles"
+                ? "bg-primary text-primary-foreground"
+                : "bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground"
+            }`}
+          >
             Water Bottles
           </button>
+
           <button className="px-6 py-3 bg-secondary text-secondary-foreground rounded-lg font-medium hover:bg-accent hover:text-accent-foreground transition-all duration-300">
             Appliances
           </button>
+          
           <button className="px-6 py-3 bg-secondary text-secondary-foreground rounded-lg font-medium hover:bg-accent hover:text-accent-foreground transition-all duration-300">
             Serveware
           </button>
@@ -80,9 +82,13 @@ const Products = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product, index) => (
-            <div key={product.id} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-              <ProductCard product={product} />
+          {filteredProducts.map((product, index) => (
+            <div
+              key={product.id}
+              className="animate-slide-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <ProductCard product={product} addToCart={addToCart} />
             </div>
           ))}
         </div>
