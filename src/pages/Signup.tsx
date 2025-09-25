@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -28,12 +29,15 @@ const Signup = () => {
         body: JSON.stringify(formData)
       });
       const result = await response.json();
-      if(response.status === 201 && result.token){
+      if(result.token){
+        console.log(result.token);
+      }
+      if(response.status === 200 && result.token){
         localStorage.setItem('token', result.token);
         if(result.user){
           localStorage.setItem('user', JSON.stringify(result.user));
         }
-       
+       navigate('/login')
       }
     }
     catch(err){
@@ -46,7 +50,7 @@ const Signup = () => {
 
     // Handle signup logic here
     console.log('Signup attempt:', formData);
-    // alert('Account creation functionality would be implemented here!');
+     alert('Account creation functionality would be implemented here!');
   };
 
   return (

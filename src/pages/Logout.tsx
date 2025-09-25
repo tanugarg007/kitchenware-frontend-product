@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { AuthContext } from '../context/AuthProvider';
+import { AuthContext } from '../context/AuthProvider.jsx';
 import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
