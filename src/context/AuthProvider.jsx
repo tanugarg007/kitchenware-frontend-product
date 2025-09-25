@@ -1,8 +1,6 @@
 
 import { createContext,  useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-const AuthContext = createContext({
+export const AuthContext = createContext({
   user: null,
   login: () => {},
   isAuthenticated: false,
@@ -10,8 +8,6 @@ const AuthContext = createContext({
   setUser: () => {},
   logout: () => {}
 });
-
-export { AuthContext };
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -25,7 +21,6 @@ export const AuthProvider = ({ children }) => {
   });
 
   const [token,setToken] = useState('');
-  const navigate = useNavigate();
 
   // check if user exists in localStorage
   useEffect(() => {
@@ -65,12 +60,14 @@ export const AuthProvider = ({ children }) => {
    };
 
    const logout = () => {
+     console.log('Logout called - clearing localStorage');
      setUser(null);
      localStorage.removeItem("user");
      localStorage.removeItem("token");
      setIsAuthenticated(false);
      setToken('');
-     navigate("/");};
+     console.log('localStorage after logout:', localStorage.getItem("user"), localStorage.getItem("token"));
+    };
 
   return (
     <AuthContext.Provider value={{ user, login, isAuthenticated,  fetchUser ,setUser,logout}}>

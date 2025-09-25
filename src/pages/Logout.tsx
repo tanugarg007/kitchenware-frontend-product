@@ -1,29 +1,19 @@
-import React from 'react';
-import { useContext } from 'react';
-
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from 'react-router-dom';
 
-const Logout = () => {
+export const Logout = () => {
   const navigate = useNavigate();
-  const {Logout} = useContext(AuthContext);
-  const handleOnClick = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    logout();
-    navigate('/'); // redirect to home page after logout
-  };
+  const { logout } = useContext(AuthContext) as any;
+
+  useEffect(() => {
+    logout();               // Clear user and token
+    navigate('/');     // Redirect to login page
+  }, [logout, navigate]);
 
   return (
-    <div>
-      <button 
-        onClick={handleOnClick} 
-        className="text-black bg-white px-4 py-2 rounded"
-      >
-        Logout 
-        
-      </button>
+    <div className="flex justify-center items-center h-screen">
+      <p>Logging out...</p>
     </div>
   );
 };
-
-export default Logout;

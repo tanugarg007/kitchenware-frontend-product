@@ -33,7 +33,7 @@ try{
     if (response.status === 200 && result.token && result.user) {
       localStorage.setItem('user', JSON.stringify(result.user));
       localStorage.setItem('token', result.token);
-      navigate('/');
+      navigate('/products');
     }
   }
   catch(err){
