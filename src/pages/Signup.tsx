@@ -18,6 +18,7 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log("user creation attempt request sent");
     e.preventDefault();
     try{
       const response = await fetch('http://localhost:4000/users/user', {

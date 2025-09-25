@@ -1,11 +1,11 @@
 import React from 'react';
 import { useContext } from 'react';
-import { AuthContext } from '../context/AuthProvider';
+
 import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
   const navigate = useNavigate();
-const {logout} = useContext(AuthContext);
+  const {Logout} = useContext(AuthContext);
   const handleOnClick = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
