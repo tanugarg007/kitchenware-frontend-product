@@ -11,12 +11,15 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product,addToCart }) => {
-  console.log(product)
+const imageUrl = product.image.startsWith('http') 
+    ? product.image 
+    : `http://localhost:4000/uploads/${product.image}`;
+  console.log(imageUrl)
   return (
     <div className="card-product group">
       <div className="aspect-square overflow-hidden">
         <img
-          src={product.image}
+          src="http://localhost:4000/uploads/coffee beater.jpg"
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />

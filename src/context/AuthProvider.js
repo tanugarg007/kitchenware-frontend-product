@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
      navigate("/");};
 
   return (
-    <AuthContext.Provider value={{ user, login, isAuthenticated,  fetchUser ,setUser}}>
+    <AuthContext.Provider value={{ user, login, isAuthenticated,  fetchUser ,setUser,logout}}>
       {children}
     </AuthContext.Provider>
   );
