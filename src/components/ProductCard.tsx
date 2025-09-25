@@ -8,16 +8,16 @@ interface Product {
 
 interface ProductCardProps {
   product: Required<Product>;
+  addToCart: (product: Product) => void;
 }
 
-const ProductCard = ({ product,addToCart }) => {
-  console.log(product.image)
-  
+const ProductCard = ({ product, addToCart }) => {
   // Construct full image URL
   const imageUrl = product.image.startsWith('http') 
     ? product.image 
     : `http://localhost:4000/uploads/${product.image}`;
   
+  console.log(imageUrl);
   return (
     <div className="card-product group">
       <div className="aspect-square overflow-hidden">
